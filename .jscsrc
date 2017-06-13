@@ -3,7 +3,8 @@
     "fileExtensions": [ ".js" ],
     "excludeFiles": [
         "js/**.min.js",
-        "gulpfile.js"
+        "gulpfile.js",
+		"node_modules"
     ],
     "requireDotNotation": {
         "allExcept": ["snake_case", "keywords"]

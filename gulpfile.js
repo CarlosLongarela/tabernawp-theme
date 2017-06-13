@@ -1,10 +1,12 @@
 var gulp = require( 'gulp' ),
+    header       = require( 'gulp-header' ),
+    fs           = require( 'fs' ),
     uglify       = require( 'gulp-uglify' ),
-		less         = require( 'gulp-less' ),
-		cssmin       = require( 'gulp-cssmin' ),
-		plumber      = require( 'gulp-plumber' ),
+    less         = require( 'gulp-less' ),
+    cssmin       = require( 'gulp-cssmin' ),
+    plumber      = require( 'gulp-plumber' ),
     concat       = require( 'gulp-concat' ),
-		rename       = require( 'gulp-rename' ),
+    rename       = require( 'gulp-rename' ),
     notify       = require( 'gulp-notify' );
 
 var scriptsJS = [
@@ -26,13 +28,11 @@ gulp.task( 'styles', function() {
     return gulp.src( './less/tabernawp.less' )
         .pipe( plumber() )
         .pipe( less() )
-        .pipe( gulp.dest( './' ) )
         .pipe( cssmin() )
-        .pipe( rename( {
-            suffix: '.min'
-        } ) )
+				.pipe( header( fs.readFileSync( './less/plugin.txt', 'utf8' ) ) )
+        .pipe( rename( 'style.css' ) )
         .pipe( gulp.dest( './' ) )
-				.pipe( notify( { message: 'Estilos creados, minificados y concatenados' } ) );
+        .pipe( notify( { message: 'Estilos creados, minificados y concatenados' } ) );
 });
 
 gulp.task( 'watch', function() {
@@ -45,5 +45,4 @@ gulp.task( 'watch', function() {
 
 });
 
-//gulp.task( 'default', [ 'scripts', 'styles', 'watch' ] );
-gulp.task( 'default', [ 'styles'] );
+gulp.task( 'default', [ 'scripts', 'styles', 'watch' ] );

@@ -2,12 +2,15 @@
   "name": "_s_gulp",
   "version": "0.0.0",
   "repository": "http://github.com/jonathanmoore/_s_gulp",
-  "dependencies": {},
+  "dependencies": {
+    "gulp-header": "^1.8.8"
+  },
   "devDependencies": {
     "buildbranch": "0.0.1",
     "connect": "^2.14.4",
     "connect-livereload": "^0.4.0",
     "gulp": "^3.6.0",
+    "gulp-add": "0.0.2",
     "gulp-autoprefixer": "^0.0.7",
     "gulp-cache": "^0.1.1",
     "gulp-clean": "^0.2.4",
@@ -16,6 +19,8 @@
     "gulp-cssmin": "^0.2.0",
     "gulp-filter": "^0.4.1",
     "gulp-flatten": "^0.0.2",
+    "gulp-fs": "0.0.2",
+    "gulp-header": "^1.8.8",
     "gulp-imagemin": "^0.5.0",
     "gulp-jshint": "^1.5.3",
     "gulp-less": "^3.3.0",
