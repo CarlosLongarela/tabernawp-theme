@@ -18,6 +18,7 @@ var styles = './less/*.less';
 
 gulp.task( 'scripts', function() {
   return gulp.src( scriptsJS )
+    .pipe( plumber() )
     .pipe( concat( 'tabernawp.min.js' ) )
     .pipe( uglify() )
     .pipe( gulp.dest( 'js' ) )

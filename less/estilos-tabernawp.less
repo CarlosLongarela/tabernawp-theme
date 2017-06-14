@@ -1,40 +1,380 @@
 // main: tabernawp.less
 
-.site-header, .site-footer {
-    background-color: @primary-color;
+/* Texto con significado sólo para los lectores de pantalla. */
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+
+	&:focus {
+		background-color: @light-color;
+		border-radius: 3px;
+		box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+		clip: auto !important;
+		color: @primary-color;
+		display: block;
+		.font-size(0.875);
+		font-weight: bold;
+		height: auto;
+		left: 5px;
+		line-height: normal;
+		padding: 15px 23px 14px;
+		text-decoration: none;
+		top: 5px;
+		width: auto;
+		z-index: 100000; /* Sobre la barra de WP. */
+	}
+}
+
+/* Do not show the outline on the skip link target. */
+#content[tabindex="-1"]:focus {
+	outline: 0;
+}
+/* Texto con significado sólo para los lectores de pantalla. */
+
+/* Menús */
+.main-navigation {
+	li,
+	ul ul {
+		float: none;
+	}
+
+	ul ul {
+		box-shadow: none;
+		height: 0;
+		overflow: hidden;
+		top: auto;
+	}
+
+	ul li:hover > ul,
+	ul li.focus > ul,
+	ul ul li:hover > ul,
+	ul ul li.focus > ul {
+		left: auto;
+	}
+
+	ul.sub-on {
+		height: auto;
+		left: auto;
+		margin-left: 2em;
+		position: relative;
+	}
 }
 
 .main-navigation {
-    background-color: @secondary-color;
+	clear: both;
+	display: block;
+	float: left;
+	width: 100%;
+
+	ul {
+		display: none;
+		list-style: none;
+		margin: 0;
+		padding-left: 0;
+
+		ul {
+			box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+			float: left;
+			position: absolute;
+			top: 1.5em;
+			left: -999em;
+			z-index: 99999;
+
+			ul {
+				left: -999em;
+				top: 0;
+			}
+
+			li {
+				&:hover > ul,
+				&.focus > ul {
+					left: 100%;
+				}
+			}
+
+			a {
+				width: 200px;
+			}
+
+			:hover > a,
+			.focus > a {
+			}
+
+			a:hover,
+			a.focus {
+			}
+		}
+
+		li:hover > ul,
+		li.focus > ul {
+			left: auto;
+		}
+	}
+
+	li {
+		float: left;
+		position: relative;
+
+		&:hover > a,
+		&.focus > a {
+		}
+	}
+
+	a {
+		display: block;
+		text-decoration: none;
+	}
+
+	.current_page_item > a,
+	.current-menu-item > a,
+	.current_page_ancestor > a,
+	.current-menu-ancestor > a {
+	}
 }
 
-.site-content {
-    border: 1px solid @gray-color-light;
-    max-width: @size-xl;
-    margin: auto;
-    padding: @layout-padding-lg;
+/* Small menu. */
+.menu-toggle,
+.main-navigation.toggled ul {
+	display: block;
 }
+
+.menu-toggle:before {
+	content: "\2630";
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.toggled .menu-toggle:before {
+	content: "X";
+}
+
+.menu-toggle {
+	position: absolute;
+	left: auto;
+	right: 0;
+	top: 0;
+	z-index: 3;
+}
+
+/* Si tenemos visible la barra de admin bajamos el botón de menú */
+body.admin-bar button.menu-toggle {
+	top: 45px;
+}
+
+.slide-panel {
+	display: none;
+	overflow-x: hidden;
+	padding: 60px 10px 5px;
+	position: relative;
+	width: 100%;
+	z-index: 2;
+}
+
+.slide-panel.expanded {
+	display: block;
+}
+
+.menu-toggle.toggle-on {
+	z-index: 3;
+}
+
+.slide-panel,
+.single .slide-panel {
+	bottom: 0;
+	height: 100%;
+	display: none;
+	overflow-y: scroll;
+	padding: 60px 0 0 0;
+	position: absolute;
+	width: 100%;
+	z-index: 2;
+}
+
+.slide-panel.expanded,
+.single .slide-panel.expanded {
+	display: block;
+}
+
+
+/* Menús */
+
+.site-header, .site-footer {
+    /*background-color: @primary-color;*/
+}
+
+.main-navigation {
+    /*background-color: @secondary-color;*/
+}
+
 
 /*
- * Layout: Content-Sidebar
- *
- * Learn more: https://developer.wordpress.org/themes/basics/template-files/
+ * Layout General
 */
+// Clearfix de los componentes principales
+.site-header,
+.site-content,
+.site-footer,
+.entry-content,
+.comment-content
+{
+	.clearfix;
+}
 
-.content-area {
-	float: left;
-	margin: 0 -25% 0 0;
-	width: 100%;
-}
-.site-main {
-	margin: 0 25% 0 0;
-}
-.site-content .widget-area {
-	float: right;
-	overflow: hidden;
-	width: 25%;
-}
+// Los tres divs principales del esqueleto de la página
+.site-header,
+.site-content,
 .site-footer {
 	clear: both;
 	width: 100%;
 }
+
+// Layout
+
+.site-content .widget-area {
+	padding: 0 10px;
+	text-align: center;
+}
+
+.site-content {
+	min-height: @min-height;
+	max-width: 65em;
+	margin: 10px auto;
+
+	img {
+		height: 100%;
+		max-width: 100%;
+	}
+
+	.entry-meta,
+	.entry-footer {
+		color: @secondary-color-light;
+		border-bottom: 4px double @secondary-color-light;
+		margin-bottom: @layout-padding;
+		padding-bottom: @layout-padding;
+
+		.updated {
+			font-size: 80%;
+		}
+
+			a {
+				color: @secondary-color-light;
+				font-style: italic;
+			}
+	}
+
+	.post-edit-link {
+		color: @control-color-success;
+		font-style: italic;
+		border-bottom: 1px dotted @control-color-success;
+		text-decoration: none;
+		&:hover {
+			text-decoration: none;
+			color: @control-color-error;
+			border-bottom: 1px dotted @control-color-error;
+		}
+	}
+
+	.nav-links {
+		background-color: @secondary-color-light;
+		padding: 5px 10px;
+
+		.nav-previous {
+			text-align: left;
+			&:before {
+				content: "<< ";
+			}
+		}
+
+		.nav-next {
+			text-align: right;
+			&:after {
+				content: " >>";
+			}
+		}
+	}
+}
+
+.site-main {
+	/*
+	margin: 10px;
+	max-width: 45em;
+	margin: auto;
+	*/
+	padding: 10px 20px;
+}
+
+.site-footer {
+	padding: 20px;
+	text-align: center;
+	color: @light-color;
+	background-color: @dark-color;
+
+	a {
+		color: @light-color;
+		border-bottom: 1px dotted @light-color;
+		text-decoration: none;
+		&:hover {
+			text-decoration: none;
+			color: @gray-color;
+			border-bottom: 1px dotted @gray-color;
+		}
+	}
+}
+/*
+// Cuerpo de la página con la barra derecha
+.content-area {
+	float: left;
+	margin: 0 -@size-widget 0 0;
+	width: 100%;
+}*/
+
+// Reglas para pantallas mayores de
+@media screen and (min-width: @size-lg ) {
+	// Cuerpo de la página con la barra derecha
+	.content-area {
+		float: left;
+		margin: 0 -@size-widget 0 0;
+		width: 100%;
+	}
+	.site-main {
+		margin: 0 @size-widget 0 0;
+	}
+	.site-content .widget-area {
+		float: right;
+		overflow: hidden;
+		width: @size-widget;
+	}
+
+	// Menús en escritorio
+	.menu-toggle {
+		display: none;
+	}
+	.main-navigation ul {
+		display: block;
+	}
+}
+// Reglas para pantallas mayores de
+
+////////////////// DEBUG //////////////////////
+.admin-bar {
+	.site-header {
+		border: 2px solid pink;
+	}
+	.site-content {
+		border: 2px solid yellowgreen;
+	}
+	.site-main {
+		border: 2px solid yellow;
+	}
+	//.site-content .widget-area {
+	//	border: 2px solid blue;
+	//}
+	//.site-footer {
+	//	border: 2px solid red;
+	//}
+}
+////////////////// DEBUG //////////////////////
+
